@@ -1,7 +1,8 @@
 import React, { useState } from "react"
-import { NavLink, Outlet } from "react-router-dom"
+import { Link, NavLink, Outlet } from "react-router-dom"
 import { userContext } from "../../misc/contexts/userContext"
-import { createTheme, colors, ThemeProvider, Box, styled, Typography } from '@mui/material'
+import { createTheme, colors, ThemeProvider, Box, styled, Typography, AppBar, Toolbar, Stack, Divider, IconButton, Button } from '@mui/material'
+import LocalPizzaRoundedIcon from '@mui/icons-material/LocalPizzaRounded';
 //Trying to export an interface and use props doesn't work because
 //you'd have to figure out how to use a component as a prop. 
 
@@ -11,7 +12,7 @@ const theme = createTheme({ //needs to match default structure
       primary: {
         main: '#EF233C',
         dark: '#D90429',
-        contrastText: '#000'
+        contrastText: '#fff'
       },
       secondary: {
         main: "#8D99AE", 
@@ -28,6 +29,7 @@ const theme = createTheme({ //needs to match default structure
   const StyledBackground = styled(Box)(({theme}) => ({
     height: '100vh',
     width: '100vw',
+    display: 'flex',
     backgroundColor: theme.palette.secondary.main,
   }))
 
@@ -39,14 +41,36 @@ function RootLayout(){
     return(
         <userContext.Provider value={{username, setUsername}}>
             <ThemeProvider theme={theme}>
+                <AppBar position = 'static'>
+                    <Toolbar>
+                        <LocalPizzaRoundedIcon  fontSize="large"/>
+                        <Typography variant="h6" component="div" sx={{flexGrow: 1}}>
+                            Pizza Pincher 
+                        </Typography>
+
+                        {/* Navlinks are associated with the 'router' in App.tsx */}
+                        <Stack direction="row" spacing = {2}>
+                            <Button color="inherit">
+                                <Link style={{textDecoration: "none", color:"inherit"}} to="/" >About</Link>
+                            </Button>
+                            <Button color='inherit'>
+                                <Link style={{textDecoration: "none", color:"inherit"}} to="/Pincher" >Pincher</Link>
+                            </Button>
+                            <Button color='inherit'>
+                                {username != '' ? <Link style={{textDecoration: "none", color:"inherit"}} to="/Account">{username}</Link> : <Link style={{textDecoration: "none", color:"inherit"}} to="/Login">Login</Link>}
+                            </Button>
+
+                        </Stack>
+                    </Toolbar>
+                </AppBar>
                 <StyledBackground className="root-layout">
-                    <header>
+                    {/* <header>
                         <nav>
-                            <NavLink to="/">Pizza Pincher</NavLink> {/* Navlinks are associated with the 'router' in App.tsx */}
+                            <
                             <NavLink to="/Pincher">Pincher</NavLink>
-                            {username != '' ? <NavLink to="/Account">{username}</NavLink> : <NavLink to="/Login">Login</NavLink>}
+                            
                         </nav>
-                    </header>
+                    </header> */}
                     
                     <main>
                         <Outlet/>  {/* This is where the output of the pages goes */}
