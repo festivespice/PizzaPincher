@@ -1,23 +1,36 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import {
+  createBrowserRouter,
+  Route,
+  createRoutesFromElements,
+  RouterProvider
+} from 'react-router-dom'
 
+//pages 
+import Landing from './components/views/Landing/Landing'
+import PizzaPlaces from './components/views/PizzaPlaces/PizzaPlaces'
+import Signup from './components/views/Signup/Signup'
+import Login from './components/views/Login/Login'
+
+//routes
+import RootLayout from './components/routing/RootLayout'
+
+//Router 
+const router = createBrowserRouter(
+  createRoutesFromElements(
+    <Route path="/" element={<RootLayout/>}> {/* The below routes are relative to this route: '/' */}
+      <Route path="/" element={<Landing/>}></Route>
+      <Route path="/PizzaPlaces" element={<PizzaPlaces/>}></Route>
+      <Route path="/Signup" element={<Signup/>}></Route>
+      <Route path="/Login" element={<Login/>}></Route>
+    </Route>
+  )
+)
+
+//Component
 function App() {
-  const [count, setCount] = useState(0) //typescript infers a number because it's obvious
-
-  function addCount(event: React.MouseEvent<HTMLButtonElement>){
-    console.log(event.currentTarget.value)
-    setCount(prev => prev + 1);
-  }
   return (
-    <div className="App">
-      
-      <button value={count} onClick={addCount}>
-        count is {count}
-      </button>
-        
-    </div>
+    <RouterProvider router = {router}></RouterProvider>
   )
 }
 
