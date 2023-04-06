@@ -9,10 +9,10 @@ const toppings = ['Mozzarella cheese', 'Basil', 'Spinach', 'Artichoke', 'Ricotta
 
 
 const pizzaSettings = {
-    Size: "",
-    Cheese: "",
-    Sauce: "",
-    Toppings: [""]
+    Size: "Any",
+    Cheese: "Any",
+    Sauce: "Any",
+    Toppings: ["Any"]
 }
 export default function IngredientsForm() {
     const [pizzaConfig, setPizzaConfig] = useState(pizzaSettings)

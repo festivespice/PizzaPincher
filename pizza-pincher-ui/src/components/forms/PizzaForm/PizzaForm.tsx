@@ -3,18 +3,19 @@ import {Box, Button, FormControl, FormControlLabel, FormHelperText, Grid, List, 
 
 //a list of binary values. Only one of them can be '1'.
 //Represents medium sized pizzas. 
-const initialPizzas = {
-    'Regular cheese': 0,
-    'Regular cheese with pepperoni': 0,
-    'New York style': 0,
-    'Neopolitan': 0,
-    'California': 0,
-    'Chicago deep-dish': 0,
-    'Greek': 0,
-    'Sicilian': 0,
-    'Roman': 0,
-    'Bianca': 0,
-}
+const initialPizzas = [
+    'Regular cheese',
+    'Regular cheese with pepperoni',
+    'New York style',
+    'Neopolitan',
+    'California',
+    'Chicago deep-dish',
+    'Greek',
+    'Sicilian',
+    'Roman',
+    'Bianca'
+]
+
 export default function PizzaForm(props: any) {
     const [pizzaType, setPizzaType] = useState('')
     const [error, setError] = useState(false)
@@ -46,9 +47,12 @@ export default function PizzaForm(props: any) {
             <form onSubmit={handleSubmit}>
                 <FormControl error={error} variant="standard">
                     <RadioGroup name="selectPizza" value={pizzaType} onChange={handleRadioChange}>
-                        <FormControlLabel value="Regular cheese" control={<Radio/>} label="Regular cheese label"/>
+                        {/* <FormControlLabel value="Regular cheese" control={<Radio/>} label="Regular cheese"/>
                         <FormControlLabel value="Regular cheese with pepperoni" control={<Radio/>} label="Regular cheese with pepperoni"/>
-                        <FormControlLabel value="New York style" control={<Radio/>} label="New York style label"/>
+                        <FormControlLabel value="New York style" control={<Radio/>} label="New York style"/> */}
+                        {initialPizzas.map((object, i) => {
+                            return(<FormControlLabel key={i} value={object} control={<Radio/>} label={object}/>)
+                        })}
                     </RadioGroup>
                     <FormHelperText>{helperText}</FormHelperText>
                     <Button sx={{m:1}} type="submit" variant="outlined">
