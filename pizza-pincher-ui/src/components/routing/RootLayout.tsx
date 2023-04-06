@@ -3,6 +3,7 @@ import { Link, NavLink, Outlet } from "react-router-dom"
 import { userContext } from "../../misc/contexts/userContext"
 import { createTheme, colors, ThemeProvider, Box, styled, Typography, AppBar, Toolbar, Stack, Divider, IconButton, Button } from '@mui/material'
 import LocalPizzaRoundedIcon from '@mui/icons-material/LocalPizzaRounded';
+import '../../App.css'
 //Trying to export an interface and use props doesn't work because
 //you'd have to figure out how to use a component as a prop. 
 
@@ -27,9 +28,6 @@ const theme = createTheme({ //needs to match default structure
   })
   
   const StyledBackground = styled(Box)(({theme}) => ({
-    height: '100vh',
-    width: '100vw',
-    display: 'flex',
     backgroundColor: theme.palette.secondary.main,
   }))
 
@@ -41,7 +39,7 @@ function RootLayout(){
     return(
         <userContext.Provider value={{username, setUsername}}>
             <ThemeProvider theme={theme}>
-                <AppBar position = 'static'>
+                <AppBar position = 'sticky'>
                     <Toolbar>
                         <LocalPizzaRoundedIcon  fontSize="large"/>
                         <Typography variant="h6" component="div" sx={{flexGrow: 1}}>
@@ -54,7 +52,7 @@ function RootLayout(){
                                 <Link style={{textDecoration: "none", color:"inherit"}} to="/" >About</Link>
                             </Button>
                             <Button color='inherit'>
-                                <Link style={{textDecoration: "none", color:"inherit"}} to="/Pincher" >Pincher</Link>
+                                <Link style={{textDecoration: "none", color:"inherit"}} to="/Search" >Search</Link>
                             </Button>
                             <Button color='inherit'>
                                 {username != '' ? <Link style={{textDecoration: "none", color:"inherit"}} to="/Account">{username}</Link> : <Link style={{textDecoration: "none", color:"inherit"}} to="/Login">Login</Link>}
@@ -63,15 +61,7 @@ function RootLayout(){
                         </Stack>
                     </Toolbar>
                 </AppBar>
-                <StyledBackground className="root-layout">
-                    {/* <header>
-                        <nav>
-                            <
-                            <NavLink to="/Pincher">Pincher</NavLink>
-                            
-                        </nav>
-                    </header> */}
-                    
+                <StyledBackground className="root-layout" py={3} px={9}>
                     <main>
                         <Outlet/>  {/* This is where the output of the pages goes */}
                     </main>
