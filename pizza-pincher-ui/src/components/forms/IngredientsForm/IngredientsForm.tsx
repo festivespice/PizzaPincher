@@ -38,11 +38,10 @@ export default function IngredientsForm() {
         //make sure that the two are defined before using them... basically neither can be null or undefined. 
         if(inputValue && name){
             //make changes to input information
-            if(Array.isArray(inputValue)){
-                inputArr = inputValue
-                console.log(inputValue)
-            }else{
+            if(!Array.isArray(inputValue)){
                 inputStr = inputValue
+            }else{
+                inputArr = inputValue
             }
             name = name.substring(0, name.indexOf("-")) //extract the ID of the parent
 
@@ -55,14 +54,25 @@ export default function IngredientsForm() {
                     return{...previousState, Cheese: inputStr}
                 } else if(name === 'Sauce'){
                     return{...previousState, Sauce: inputStr}
-                } else if(name === 'Toppings'){
-                    return{...previousState, Toppings:inputArr} //we don't need to spread because it returns the entire array
+                } else if(name === "Toppings"){
+                    //Dealing with toppings was really weird. When you delete a chip, it doesn't return a name. 
+                    //But when you add a chip, it does. Hence the two different setPizzaConfigs for Toppings. 
+                    return{...previousState, Toppings:[
+                        ...inputArr
+                    ]}
                 }
                 else{
                     //if no valid name is given, don't make changes
                     return{...previousState}
                 }
                 
+            })
+        } else if(Array.isArray(inputValue)){ //the name isn't valid
+            inputArr = inputValue
+            setPizzaConfig(previousState => {
+                return{...previousState, Toppings:[
+                    ...inputArr
+                ]} //we don't need to spread because it returns the entire array
             })
         }
         console.log(pizzaConfig)
@@ -74,6 +84,7 @@ export default function IngredientsForm() {
             <Typography variant="h6" mb={3}>Find specific pizza</Typography>
             <form onSubmit={handleSubmit}>
                 <Autocomplete
+                    sx={{my: 1}}
                     value={pizzaConfig.Size}
                     options={sizes.map((size) => size)}
                     id="Size"
@@ -83,6 +94,7 @@ export default function IngredientsForm() {
                     // We are using the "onChange" "value" state instead of onInputChange: only complete results and not half-typed strings
                 />   
                 <Autocomplete
+                    sx={{my: 1}}
                     value={pizzaConfig.Cheese}
                     options={cheeses.map((cheese) => cheese)}
                     id="Cheese"
@@ -92,6 +104,7 @@ export default function IngredientsForm() {
                     // We are using the "onChange" "value" state instead of onInputChange: only complete results and not half-typed strings
                 />   
                 <Autocomplete
+                    sx={{my: 1}}
                     value={pizzaConfig.Sauce}
                     options={sauces.map((sauce) => sauce)}
                     id="Sauce"
@@ -103,6 +116,7 @@ export default function IngredientsForm() {
                 <Autocomplete
                     multiple
                     limitTags={2}
+                    sx={{my: 1}}
                     value={pizzaConfig.Toppings}
                     options={toppings.map((topping) => topping)}
                     fullWidth={true}
@@ -111,7 +125,7 @@ export default function IngredientsForm() {
                     onChange={handleIngredientsChange} 
                     // We are using the "onChange" "value" state instead of onInputChange: only complete results and not half-typed strings
                 /> 
-                <Button sx={{m:1}} type="submit" variant="outlined">
+                <Button sx={{m:1}} fullWidth={true} type="submit" variant="outlined">
                     Find places
                 </Button>
             </form>
