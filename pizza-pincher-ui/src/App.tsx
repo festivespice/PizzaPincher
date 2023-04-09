@@ -14,6 +14,7 @@ import Account from './components/views/Account/Account'
 import Search from './components/views/PizzaPinching/Search'
 import Places from './components/views/PizzaPinching/Places'
 import Place from './components/views/PizzaPinching/Place'
+import Location from './components/views/PizzaPinching/Location'
 
 //start
 import RootLayout from './components/routing/RootLayout'
@@ -24,7 +25,9 @@ const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<RootLayout/>}> {/* The below routes are relative to this route: '/' */}
       <Route path="/" element={<Landing/>}></Route>
-      <Route path="Search" element={<Search/>}></Route>
+      <Route path="Search" element={<Search/>}>
+        <Route path="Location" element={<Location/>}></Route>
+      </Route>
       <Route path="Places" element={<Places/>}>
         <Route path="Place/:name" element={<Place/>}></Route>
       </Route>

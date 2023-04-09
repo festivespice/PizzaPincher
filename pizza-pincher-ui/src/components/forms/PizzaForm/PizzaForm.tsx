@@ -1,5 +1,6 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState, SetStateAction} from 'react'
 import {Box, Button, FormControl, FormControlLabel, FormHelperText, Grid, List, Paper, Radio, RadioGroup, Stack, Typography} from '@mui/material'
+import { useNavigate } from 'react-router-dom'
 
 //a list of binary values. Only one of them can be '1'.
 //Represents medium sized pizzas. 
@@ -15,11 +16,16 @@ const initialPizzas = [
     'Roman',
     'Bianca'
 ]
-
-export default function PizzaForm(props: any) {
+interface AppProps {
+    setPizzaForm: React.Dispatch<SetStateAction<boolean>>
+}
+export default function PizzaForm(props: AppProps) {
+    
     const [pizzaType, setPizzaType] = useState('')
     const [error, setError] = useState(false)
     const [helperText, setHelperText] = useState('')
+    const navigate = useNavigate()
+    let askForLocation = false
     
     //validate the form
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
@@ -27,9 +33,8 @@ export default function PizzaForm(props: any) {
         
         if(pizzaType == ''){
             setHelperText('Please select an option')
-        }
-        else{
-            //navigate to the next page with the data
+        }else{
+            navigate('./Location', {state: pizzaType})
         }
     }
     

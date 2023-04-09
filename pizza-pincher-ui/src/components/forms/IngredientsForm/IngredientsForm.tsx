@@ -1,10 +1,11 @@
-import React, { useState } from 'react'
+import React, { useState, SetStateAction } from 'react'
 import {Autocomplete, Box, Button, FormControl, FormControlLabel, FormHelperText, Grid, List, Paper, Radio, RadioGroup, Stack, Typography, TextField} from '@mui/material'
+import { Navigate, useNavigate } from 'react-router-dom'
 
-const sizes = ['Small', 'Medium', 'Large']
-const cheeses = ['Mozzarella', 'Provolone', 'Cheddar', 'Ricotta']
-const sauces = ['Tomato', 'Pesto', 'Alfredo', 'BBQ', 'Buffalo']
-const toppings = ['Mozzarella cheese', 'Basil', 'Spinach', 'Artichoke', 'Ricotta cheese', 'Black olive', 'Feta cheese', 'Sausage', 'Pepper', 'Mushroom', 'Pesto sauce', 'Jalapeno', 'Pepperoni', 'Onion', 'Bacon', 'Cheese', 'Chicken', 'Pineapple', 'Ham', 'Garlic', 'Tomato', 'Anchovies', 'Banana pepper', ]
+const sizes = ['Any', 'Small', 'Medium', 'Large']
+const cheeses = ['Any', 'Mozzarella', 'Provolone', 'Cheddar', 'Ricotta']
+const sauces = ['Any', 'Tomato', 'Pesto', 'Alfredo', 'BBQ', 'Buffalo']
+const toppings = ['Any', 'Mozzarella cheese', 'Basil', 'Spinach', 'Artichoke', 'Ricotta cheese', 'Black olive', 'Feta cheese', 'Sausage', 'Pepper', 'Mushroom', 'Pesto sauce', 'Jalapeno', 'Pepperoni', 'Onion', 'Bacon', 'Cheese', 'Chicken', 'Pineapple', 'Ham', 'Garlic', 'Tomato', 'Anchovies', 'Banana pepper', ]
 
 
 
@@ -14,18 +15,21 @@ const pizzaSettings = {
     Sauce: "Any",
     Toppings: ["Any"]
 }
-export default function IngredientsForm() {
+interface AppProps {
+    setIngredientsForm: React.Dispatch<SetStateAction<boolean>>
+}
+export default function IngredientsForm(props: AppProps) {
     const [pizzaConfig, setPizzaConfig] = useState(pizzaSettings)
     const [error, setError] = useState(false)
     const [helperText, setHelperText] = useState('')
-    //create a state hook that catches when each chip is deleted, or maybe just send setPizzaConfig as a prop
+    const navigate = useNavigate()
 
     //validate the form
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
 
         //submitting with no options basically means search for any pizzas (very chaotic)
-        console.log('submit')
+        navigate('./Location', {state: {...pizzaConfig}})
     }
 
     //store the new change in the pizza settings
@@ -79,7 +83,7 @@ export default function IngredientsForm() {
     }
 
     return (
-    <Box>
+    <Box sx={{backgroundColor: "#EDF2F4"}}>
         <Stack direction="column">
             <Typography variant="h6" mb={3}>Find specific pizza</Typography>
             <form onSubmit={handleSubmit}>

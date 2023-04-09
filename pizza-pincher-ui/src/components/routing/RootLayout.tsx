@@ -7,8 +7,8 @@ import '../../App.css'
 //Trying to export an interface and use props doesn't work because
 //you'd have to figure out how to use a component as a prop. 
 
-//Styling
-const theme = createTheme({ //needs to match default structure
+    //Styling
+    export const theme = createTheme({ //needs to match default structure
     palette: {
       primary: {
         main: '#EF233C',
