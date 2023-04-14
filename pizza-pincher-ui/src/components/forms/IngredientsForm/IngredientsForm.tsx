@@ -1,6 +1,7 @@
-import React, { useState, SetStateAction } from 'react'
+import React, { useState, SetStateAction, useContext } from 'react'
 import {Autocomplete, Box, Button, FormControl, FormControlLabel, FormHelperText, Grid, List, Paper, Radio, RadioGroup, Stack, Typography, TextField} from '@mui/material'
 import { Navigate, useNavigate } from 'react-router-dom'
+import { pizzaConfigContext } from '../../../misc/contexts/pizzaConfigContext'
 
 const sizes = ['Any', 'Small', 'Medium', 'Large']
 const cheeses = ['Any', 'Mozzarella', 'Provolone', 'Cheddar', 'Ricotta']
@@ -15,21 +16,27 @@ const pizzaSettings = {
     Sauce: "Any",
     Toppings: ["Any"]
 }
+
 interface AppProps {
     setIngredientsForm: React.Dispatch<SetStateAction<boolean>>
 }
+
 export default function IngredientsForm(props: AppProps) {
     const [pizzaConfig, setPizzaConfig] = useState(pizzaSettings)
     const [error, setError] = useState(false)
     const [helperText, setHelperText] = useState('')
+    const {pizzaIngredientsCt, setPizzaIngredientsCt} = useContext(pizzaConfigContext)
     const navigate = useNavigate()
 
     //validate the form
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-
+        //notify the parent component that the ingredients form submitted
+        props.setIngredientsForm(true)
+        //change the pizzaConfigContext
+        setPizzaIngredientsCt(pizzaConfig)
         //submitting with no options basically means search for any pizzas (very chaotic)
-        navigate('./Location', {state: {...pizzaConfig}})
+        navigate('./Location')
     }
 
     //store the new change in the pizza settings

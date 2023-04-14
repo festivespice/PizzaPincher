@@ -1,6 +1,7 @@
-import React, { useEffect, useState, SetStateAction} from 'react'
+import React, { useEffect, useState, SetStateAction, useContext} from 'react'
 import {Box, Button, FormControl, FormControlLabel, FormHelperText, Grid, List, Paper, Radio, RadioGroup, Stack, Typography} from '@mui/material'
 import { useNavigate } from 'react-router-dom'
+import { pizzaConfigContext } from '../../../misc/contexts/pizzaConfigContext'
 
 //a list of binary values. Only one of them can be '1'.
 //Represents medium sized pizzas. 
@@ -24,8 +25,9 @@ export default function PizzaForm(props: AppProps) {
     const [pizzaType, setPizzaType] = useState('')
     const [error, setError] = useState(false)
     const [helperText, setHelperText] = useState('')
+    const {pizzaTypeCt, setPizzaTypeCt} = useContext(pizzaConfigContext)
+
     const navigate = useNavigate()
-    let askForLocation = false
     
     //validate the form
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
@@ -34,6 +36,9 @@ export default function PizzaForm(props: AppProps) {
         if(pizzaType == ''){
             setHelperText('Please select an option')
         }else{
+            //change the state
+            setPizzaTypeCt(pizzaType)
+            //navigate to ask the user for their location
             navigate('./Location', {state: pizzaType})
         }
     }
@@ -52,9 +57,6 @@ export default function PizzaForm(props: AppProps) {
             <form onSubmit={handleSubmit}>
                 <FormControl error={error} variant="standard">
                     <RadioGroup name="selectPizza" value={pizzaType} onChange={handleRadioChange}>
-                        {/* <FormControlLabel value="Regular cheese" control={<Radio/>} label="Regular cheese"/>
-                        <FormControlLabel value="Regular cheese with pepperoni" control={<Radio/>} label="Regular cheese with pepperoni"/>
-                        <FormControlLabel value="New York style" control={<Radio/>} label="New York style"/> */}
                         {initialPizzas.map((object, i) => {
                             return(<FormControlLabel key={i} value={object} control={<Radio/>} label={object}/>)
                         })}

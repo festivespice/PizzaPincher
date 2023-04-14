@@ -1,9 +1,10 @@
 import React, { useState } from "react"
 import { Link, NavLink, Outlet } from "react-router-dom"
-import { userContext } from "../../misc/contexts/userContext"
 import { createTheme, colors, ThemeProvider, Box, styled, Typography, AppBar, Toolbar, Stack, Divider, IconButton, Button } from '@mui/material'
 import LocalPizzaRoundedIcon from '@mui/icons-material/LocalPizzaRounded';
 import '../../App.css'
+import { pizzaConfigContext, pizzaInfo } from "../../misc/contexts/pizzaConfigContext";
+import { userContext } from "../../misc/contexts/userContext"
 //Trying to export an interface and use props doesn't work because
 //you'd have to figure out how to use a component as a prop. 
 
@@ -35,6 +36,14 @@ import '../../App.css'
 function RootLayout(){
     //user status hook. using a provider to give consumers the context we defined in ../misc/contexts/userContext.ts
     const [username, setUsername] = useState("pizzaman")
+    const [locationCt, setLocationCt] = useState('')
+    const [pizzaTypeCt, setPizzaTypeCt] = useState('')
+    const [pizzaIngredientsCt, setPizzaIngredientsCt] = useState<pizzaInfo>({
+        Size: '',
+        Cheese: '',
+        Sauce: '',
+        Toppings: []
+    })
 
     return(
         <userContext.Provider value={{username, setUsername}}>
@@ -63,7 +72,9 @@ function RootLayout(){
                 </AppBar>
                 <StyledBackground className="root-layout" py={3} px={9}>
                     <main>
-                        <Outlet/>  {/* This is where the output of the pages goes */}
+                        <pizzaConfigContext.Provider value={{locationCt, setLocationCt, pizzaTypeCt, setPizzaTypeCt, pizzaIngredientsCt, setPizzaIngredientsCt}}>
+                            <Outlet/>  {/* This is where the output of the pages goes */}
+                        </pizzaConfigContext.Provider>
                     </main>
                 </StyledBackground>
             </ThemeProvider>
