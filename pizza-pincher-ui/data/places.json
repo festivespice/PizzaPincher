@@ -1,0 +1,37 @@
+{
+    "places": [
+        {
+            "id": 1,
+            "title": "Mama Mia's",
+            "location": "Orlando, Somewhere 1",
+            "hasPizza": true,
+            "price": 15.00,
+            "distance": 5,
+            "rating": 3.61,
+            "websiteURL": "http://127.0.0.1:3000/wowza",
+            "phoneNumber": "4074093019"
+        },
+        {
+            "id": 2,
+            "title": "Papa Johns",
+            "location": "Orlando, Somewhere 2",
+            "hasPizza": true,
+            "price": 8.00,
+            "distance": 3.50,
+            "rating": 4,
+            "websiteURL": "http://127.0.0.1:3000/peetza",
+            "phoneNumber": "4074093017"
+        },
+        {
+            "id": 2,
+            "title": "Pizza Hut",
+            "location": "Orlando, Somewhere 3",
+            "hasPizza": false,
+            "price": "",
+            "distance": 1.25,
+            "rating": 2.3,
+            "websiteURL": "http://127.0.0.1:3000/yipyip",
+            "phoneNumber": "4074093012"
+        }
+    ]
+}

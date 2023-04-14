@@ -1,23 +1,47 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import {
+  createBrowserRouter,
+  Route,
+  createRoutesFromElements,
+  RouterProvider
+} from 'react-router-dom'
 
+//pages 
+import Landing from './components/views/Landing/Landing'
+import Signup from './components/views/Signup/Signup'
+import Login from './components/views/Login/Login'
+import Account from './components/views/Account/Account'
+import Search from './components/views/PizzaPinching/Search'
+import Places from './components/views/PizzaPinching/Places'
+import Place from './components/views/PizzaPinching/Place'
+import Location from './components/views/PizzaPinching/Location'
+
+//start
+import RootLayout from './components/routing/RootLayout'
+
+
+//Router 
+const router = createBrowserRouter(
+  createRoutesFromElements(
+    <Route path="/" element={<RootLayout/>}> {/* The below routes are relative to this route: '/' */}
+      <Route path="/" element={<Landing/>}></Route>
+      <Route path="Search" element={<Search/>}>
+        <Route path="Location" element={<Location/>}></Route>
+      </Route>
+      <Route path="Places" element={<Places/>}>
+        <Route path="Place/:name" element={<Place/>}></Route>
+      </Route>
+      <Route path="Signup" element={<Signup/>}></Route>
+      <Route path="Login" element={<Login/>}></Route>
+      <Route path="Account" element={<Account/>}></Route>
+    </Route>
+  )
+)
+
+//Component
 function App() {
-  const [count, setCount] = useState(0) //typescript infers a number because it's obvious
-
-  function addCount(event: React.MouseEvent<HTMLButtonElement>){
-    console.log(event.currentTarget.value)
-    setCount(prev => prev + 1);
-  }
-  return (
-    <div className="App">
-      
-      <button value={count} onClick={addCount}>
-        count is {count}
-      </button>
-        
-    </div>
+  return ( //the root is at RootLayout component. 
+    <RouterProvider router = {router}></RouterProvider> 
   )
 }
 
