@@ -4,7 +4,6 @@
             "id": 1,
             "title": "Mama Mia's",
             "location": "Orlando, Somewhere 1",
-            "hasPizza": true,
             "price": 15.00,
             "distance": 5,
             "rating": 3.61,
@@ -16,7 +15,6 @@
             "id": 2,
             "title": "Papa Johns",
             "location": "Orlando, Somewhere 2",
-            "hasPizza": true,
             "price": 8.00,
             "distance": 3.50,
             "rating": 4,
@@ -28,13 +26,12 @@
             "id": 3,
             "title": "Pizza Hut",
             "location": "Orlando, Somewhere 3",
-            "hasPizza": false,
             "price": null,
             "distance": 1.25,
             "rating": 2.3,
             "websiteURL": "http://127.0.0.1:3000/yipyip",
             "phoneNumber": "4074093012",
-            "imageURL": "https://theredledger.net/wp-content/uploads/2014/04/DSC_0030.jpg"
+            "imageURL": null
         }
     ]
 }

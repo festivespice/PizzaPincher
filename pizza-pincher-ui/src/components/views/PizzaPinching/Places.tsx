@@ -15,7 +15,6 @@ export default function Places() {
   if(locationCt == '' || (pizzaTypeCt == '' && pizzaIngredientsCt.Cheese == '')){
     return<Navigate to="/" replace={true}/>
   }
-  
 
   //if not empty, figure out which pizza information isn't empty and use that one
   const notEmptyPizza = pizzaTypeCt == '' ? pizzaIngredientsCt : pizzaTypeCt
@@ -25,9 +24,9 @@ export default function Places() {
     headers: {'Content-Type': 'application/json'},
     body: JSON.stringify({place: locationCt, pizza: notEmptyPizza})
   }
+  console.log({place: locationCt, pizza: notEmptyPizza})
 
   useEffect(() => {
-    
     axios.get("http://localhost:3001/places")
       .then(res => {
         setPlaces(res.data)
@@ -41,13 +40,13 @@ export default function Places() {
     <Paper sx={{
       minWidth: '80vw',
       minHeight: '60vh',
-      padding: '32px'
+      padding: '16px'
     }}>
     <Grid container>
       <Grid item xs={12} md={10}>
         <Box sx={{
-          backgroundColor: 'gray'
-
+          backgroundColor: 'gray',
+          
         }} p={1}>
           <Grid container sx={{justifyContent:"space-around"}}>
             {places.length ? 
