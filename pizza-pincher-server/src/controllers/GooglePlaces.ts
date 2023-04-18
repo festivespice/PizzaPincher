@@ -1,27 +1,60 @@
-//npx ts-node .\src\controllers\GooglePlaces.ts to run this
-
 import dotenv from 'dotenv';
+import {AxiosError, AxiosResponse} from "axios";
 
 dotenv.config(); //loads environment variables hidden from common view.
 
-var api = process.env.API_KEY;
-// need to split up this url more to for parameters
-var fullUrl = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=-33.8670522%2C151.1957362&radius=1500&type=restaurant&keyword=cruise&key=" + api
+const api = process.env.API_KEY;
 
-// Googles code for using nearby searches with Places API
-// https://developers.google.com/maps/documentation/places/web-service/search-nearby#maps_http_places_nearbysearch-js
-var axios = require('axios');
+const axios = require('axios');
 
-var config = {
-  method: 'get',
-  url: fullUrl,
-  headers: { }
-};
+export async function getNearbyPlaces() {
+  // get the latitude and longitude
+  let latLng  = await getLatLng();
+  let lat = latLng["results"][0]["geometry"]["location"]["lat"];
+  let lng = latLng["results"][0]["geometry"]["location"]["lng"];
 
-axios(config)
-.then(function (response: any) {
-  console.log(JSON.stringify(response.data));
-})
-.catch(function (error: any) {
-  console.log(error);
-});
+  let radius = "500"; // radius to search in meters
+
+  let fullUrl = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=" + lat + "%2C" + lng +
+      "&radius=" + radius + "&type=restaurant&keyword=pizza&key=" + api
+
+  let config = {
+    method: 'get',
+    url: fullUrl,
+    headers: {}
+  };
+
+  return axios(config)
+  .then(function (response: AxiosResponse<any>) {
+    return JSON.stringify(response.data); // temporarily returned as string until target information identified
+  })
+  .catch(function (error: AxiosError<any>) {
+    console.log(error);
+    return "Error occurred finding nearby places"
+  });
+}
+
+function getLatLng() {
+
+  // address example format 1600+Amphitheatre+Parkway,+Mountain+View,+CA
+  let address = "Lakeland+Square+Mall,+Lakeland,+FL"
+  let fullUrl = "https://maps.googleapis.com/maps/api/geocode/json?address=" + address + "&key=" + api
+
+
+  let config = {
+    method: 'get',
+    url: fullUrl,
+    headers: { }
+  };
+
+  return axios(config)
+  .then(function (response : AxiosResponse<any>) {
+    return response.data
+
+  })
+  .catch(function (error : AxiosError<any>) {
+    console.log(error);
+    return "Error occurred acquiring latitude and longitude"
+  });
+
+}
