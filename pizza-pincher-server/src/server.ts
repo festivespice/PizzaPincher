@@ -38,7 +38,8 @@ app.use(cors({
 // import UserRoute from  ''
 // import DominosRoute from ''
 // import GooglePlacesRoute from ''
-//app.use("/api", route);
+const googleRouter = require("./routes/GooglePlaces.ts")
+app.use("/api", googleRouter);
 
 app.get('/', function(req,res){
     res.send("<h2> An API used to access 'user', 'googleplaces', 'dominos', and 'user' endpoints</h2>")
@@ -49,4 +50,4 @@ app.listen(serverPort, function(){
     console.log("Server started at port " + serverPort)
 })
 
-//To run this .ts file, do 'npx ts-node ./src/server.ts'
+//To run this .ts file, do 'npx ts-node ./pizza-pincher-server/src/server.ts'
