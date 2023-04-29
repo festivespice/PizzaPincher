@@ -4,7 +4,8 @@ import { Navigate } from 'react-router-dom'
 import axios from 'axios'
 import PlaceCard from '../../cards/PlaceCard'
 import { Place } from '../../../misc/interfaces/Place'
-import { Box, Grid, Paper } from '@mui/material'
+import { Box, Grid, Paper, Typography } from '@mui/material'
+import PlacesSortBar from '../../forms/PlacesSortBar/PlacesSortBar'
 
 
 export default function Places() {
@@ -24,9 +25,9 @@ export default function Places() {
     headers: {'Content-Type': 'application/json'},
     body: JSON.stringify({place: locationCt, pizza: notEmptyPizza})
   }
-  console.log({place: locationCt, pizza: notEmptyPizza})
+  //console.log({place: locationCt, pizza: notEmptyPizza})
 
-  useEffect(() => {
+  useEffect(() => { //when this page is loaded, try to load the places once. Request using the search parameters.
     axios.get("http://localhost:3001/places")
       .then(res => {
         setPlaces(res.data)
@@ -34,7 +35,8 @@ export default function Places() {
       .catch(error => {
         alert(error)
       })
-  }, [])
+  }, []) //removing the '[]' means to keep loading over and over again
+
   
   return (
     <Paper sx={{
@@ -42,11 +44,11 @@ export default function Places() {
       minHeight: '60vh',
       padding: '16px'
     }}>
+    <PlacesSortBar places={places} setPlaces={setPlaces} />
     <Grid container>
-      <Grid item xs={12} md={10}>
+      <Grid item xs={12}>
         <Box sx={{
           backgroundColor: 'gray',
-          
         }} p={1}>
           <Grid container sx={{justifyContent:"space-around"}}>
             {places.length ? 
