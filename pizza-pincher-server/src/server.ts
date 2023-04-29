@@ -1,3 +1,4 @@
+//To run this .ts file, do 'npx ts-node ./pizza-pincher-server/src/server.ts'
 /* Import basic modules */
 import dotenv from 'dotenv';
 dotenv.config();
@@ -49,5 +50,3 @@ app.get('/', function(req,res){
 app.listen(serverPort, function(){
     console.log("Server started at port " + serverPort)
 })
-
-//To run this .ts file, do 'npx ts-node ./pizza-pincher-server/src/server.ts'
