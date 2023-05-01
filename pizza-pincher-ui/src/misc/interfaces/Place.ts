@@ -1,3 +1,5 @@
+import { Pizza } from "./Pizza"
+
 export interface Place {
     id: number,
     title: string, 
@@ -7,5 +9,7 @@ export interface Place {
     rating: number|null, 
     websiteURL: string|null,
     phoneNumber: string|null, 
-    imageURL: string|null
+    imageURL: string|null,
+    ownerUsername: string|null
+    pizzas: Pizza[] | null
   }

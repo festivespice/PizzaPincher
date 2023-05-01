@@ -9,7 +9,8 @@
             "rating": 3.61,
             "websiteURL": "http://127.0.0.1:3000/wowza",
             "phoneNumber": "4074093019",
-            "imageURL": "https://img.theculturetrip.com/768x/smart/wp-content/uploads/2015/12/frankspizza.jpg"
+            "imageURL": "https://img.theculturetrip.com/768x/smart/wp-content/uploads/2015/12/frankspizza.jpg",
+            "ownerName": "pizzaman"
         },
         {
             "id": 2,
@@ -20,7 +21,8 @@
             "rating": 4,
             "websiteURL": "http://127.0.0.1:3000/peetza",
             "phoneNumber": "4074093017",
-            "imageURL": "https://cdn.onlyinyourstate.com/wp-content/uploads/2016/12/12190859_408999932557934_929339853361937167_n-700x525.jpg"
+            "imageURL": "https://cdn.onlyinyourstate.com/wp-content/uploads/2016/12/12190859_408999932557934_929339853361937167_n-700x525.jpg",
+            "ownerName": ""
         },
         {
             "id": 3,
@@ -31,7 +33,8 @@
             "rating": 2.3,
             "websiteURL": "http://127.0.0.1:3000/yipyip",
             "phoneNumber": "4074093012",
-            "imageURL": null
+            "imageURL": null,
+            "ownerName": null        
         }
     ]
 }
