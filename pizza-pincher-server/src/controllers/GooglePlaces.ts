@@ -11,9 +11,7 @@ export async function getNearbyPlaces(pizzaInfoAddress: JSON) {
     // fix type error, pizzaInfoAddress[anything] gives error
     let pizzaInfoAddressJSON = JSON.parse(JSON.stringify(pizzaInfoAddress))["body"];
     pizzaInfoAddressJSON = JSON.parse(pizzaInfoAddressJSON) //the body has multiple attributes
-
-    console.log(pizzaInfoAddressJSON)
-    console.log(typeof(pizzaInfoAddressJSON))
+    
     // pizza will either only have a single value or have cheese, sauce, size, and toppings nested in it
     if (!pizzaInfoAddressJSON['pizza'].hasOwnProperty('cheese')) {
         var pizza = pizzaInfoAddressJSON['pizza'];
@@ -168,7 +166,7 @@ async function processNearbyPlaces(places: any, lat: string, lng: string) {
         //we only want the number for distance
         distance = distance.split(" ")[0]
         distance = Number(distance)
-        
+
         placeDetailsFull[i] = {
             id: i, //a numeric id for each returned place
             name: name,
