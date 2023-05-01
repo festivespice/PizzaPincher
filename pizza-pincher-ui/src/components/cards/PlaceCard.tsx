@@ -23,7 +23,6 @@ export default function PlaceCard(props: AppProps) {
     const selectCardHelper = () => {
         props.selectCard(props.placeProps.id)
     }
-    console.log(props.placeProps.photo)
     
 
     return (
@@ -64,7 +63,7 @@ export default function PlaceCard(props: AppProps) {
                         <>
                         <Rating name={props.placeProps.name} defaultValue={props.placeProps.rating} precision={0.2} readOnly/>
                             <Typography component="div" variant="body2">
-                                {props.placeProps.ratingNumber}
+                                {props.placeProps.ratingnumber}
                             </Typography>
                         </>          
                         :

@@ -7,7 +7,7 @@ export interface PlaceInfo {
     price: number|null,
     distance: number, 
     rating: number|null, 
-    ratingNumber: number | null,
+    ratingnumber: number | null,
     website: string|null,
     number: string|null, 
     imageURL: string|null,

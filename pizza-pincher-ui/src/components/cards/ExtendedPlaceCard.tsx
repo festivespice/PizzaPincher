@@ -31,7 +31,7 @@ export default function ExtendedPlaceCard(props: AppProps) {
         const dayOfWeek = "Monday: 11:00 AM – 8:00 PM".split(":")[0];
         const today = new Date().toLocaleString('en-us', {  weekday: 'long' });
         const todaysTimes = props.placeProps.openHours.filter(dayTimes => dayTimes.split(":")[0] == today) //checks if the day is the same as today
-        openTimes = 'Open today: ' + todaysTimes[0] //get the first time that is today
+        openTimes = 'Open today. ' + todaysTimes[0] //get the first time that is today
     }
 
     return (
@@ -85,7 +85,7 @@ export default function ExtendedPlaceCard(props: AppProps) {
                         <>
                             <Rating name={props.placeProps.name} defaultValue={props.placeProps.rating} precision={0.2} readOnly/>
                             <Typography component="div" variant="body2">
-                                {props.placeProps.ratingNumber}
+                                {props.placeProps.ratingnumber}
                             </Typography>
                         </>                        
                         :
