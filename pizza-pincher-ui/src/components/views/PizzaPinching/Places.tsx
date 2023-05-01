@@ -27,7 +27,7 @@ export default function Places() {
       })
       .catch(error => {
         console.log("Error")
-        console.log(error.message)
+        alert(error.message)
       })
   }, []) //removing the '[]' means to keep loading over and over again
   
