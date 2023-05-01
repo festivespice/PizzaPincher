@@ -206,7 +206,7 @@ async function processNearbyPlaces(places: any, lat: string, lng: string) {
             id: i, //a numeric id for each returned place
             name: name,
             rating: rating,
-            ratingNumber: ratingNumber,
+            ratingnumber: ratingNumber,
             openHours: openHours,
             address: address,
             number: number,
