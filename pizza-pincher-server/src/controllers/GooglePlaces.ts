@@ -7,6 +7,10 @@ const api = process.env.API_KEY;
 
 const axios = require('axios');
 
+function delay(ms: any) {
+    return new Promise((resolve) => setTimeout(resolve, ms));
+  }
+
 export async function getNearbyPlaces(pizzaInfoAddress: JSON) {
     // fix type error, pizzaInfoAddress[anything] gives error
     let pizzaInfoAddressJSON = JSON.parse(JSON.stringify(pizzaInfoAddress))["body"];
@@ -35,7 +39,7 @@ export async function getNearbyPlaces(pizzaInfoAddress: JSON) {
 
     let radius = '24140'; // radius to search in meters. About 15 miles
 
-    let fullUrl = 'https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=' + lat + '%2C' + lng + '&radius=' + radius + '&type=pizza&keyword=pizza&key=' + api;
+    let fullUrl = 'https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=' + lat + '%2C' + lng + '&radius=' + radius + '&query=pizza&keyword=pizza&key=' + api;
 
     let config = {
         method: 'get',
@@ -43,14 +47,38 @@ export async function getNearbyPlaces(pizzaInfoAddress: JSON) {
         headers: {}
     };
 
-    return axios(config)
-        .then(function (response: AxiosResponse<any>) {
-            return processNearbyPlaces(response.data, lat, lng);
-        })
-        .catch(function (error: AxiosError<any>) {
-            console.log(error);
-            return 'Error occurred finding nearby places';
-        });
+    // return axios(config)
+    //     .then(function (response: AxiosResponse<any>) {
+    //         console.log("Pizza places")
+    //         console.log(response.data)
+    //         return processNearbyPlaces(response.data, lat, lng);
+    //     })
+    //     .catch(function (error: AxiosError<any>) {
+    //         console.log(error);
+    //         return 'Error occurred finding nearby places';
+    //     });
+
+    let nextPageToken = '';
+    let results: any[] = [];
+
+    //Loop until we have retrieved all the results or reached the limit of 60 results
+    while (results.length < 60 && nextPageToken !== null) {
+        let response = await axios(config);
+        console.log(response.data); // Log the entire response object
+        results = results.concat(response.data.results);
+        nextPageToken = response.data.next_page_token;
+        if (nextPageToken) {
+          // If there are more results, update the URL with the next_page_token
+          fullUrl = 'https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=' + lat + '%2C' + lng + '&radius=' + radius + '&query=pizza&keyword=pizza&key=' + api + '&pagetoken=' + nextPageToken;
+          config.url = fullUrl;
+    
+          // Add a delay before making the next request
+          await delay(2000); // 2 seconds delay
+        }
+      }
+    console.log(results)
+
+    return processNearbyPlaces(results, lat, lng);
 }
 
 function getLatLng(address: string) {
@@ -168,14 +196,16 @@ function getPhoto(photo: any) {
 }
 
 async function processNearbyPlaces(places: any, lat: string, lng: string) {
+
     let placeDetails: any[] = [];
     let placeDetailsFull: any[] = [];
     let placeDistance: any;
 
+    console.log(places.length)
     // Extract place id for all nearby places
     let placeID: string[] = [];
-    for (let i = 0; i < places.results.length; i++) {
-        placeID[i] = places.results[i].place_id;
+    for (let i = 0; i < places.length; i++) {
+        placeID[i] = places[i].place_id;
     }
 
     for (let i = 0; i < placeID.length; i++) {
