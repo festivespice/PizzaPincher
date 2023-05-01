@@ -1,52 +1,70 @@
-//To run this .ts file, do 'npx ts-node ./pizza-pincher-server/src/server.ts'
-/* Import basic modules */
-import dotenv from 'dotenv';
-dotenv.config();
-
-//dotenv is handled both here and at ./config. Those values need to be imported here.
-
-//TODO: Implement Google Maps API
-//TODO: implement Domino's API 
-//TODO: Implement database and API
-//TODO: Implement user collection for database
-//TODO: Implement user authentication
-
-//using Typescript lets us import packages instead of requiring them. 
 import express from 'express';
-import http from 'http'; 
-import cors from 'cors'; //if a package can't be imported normally in typescript, try installing the typescript types
+import http from 'http';
+import mongoose from 'mongoose';
+import { config } from './config/config';
+import userRoutes from './routes/User';
+import GooglePlacesRoutes from './routes/GooglePlaces';
 
-/* Create and modify server object */
-//create an express object that "uses" the libraries we specify for things like cookies or CORS. 
-const app = express()
-const serverPort = process.env.SERVERPORT; 
-const frontEndPort = process.env.FRONTENDPORT; 
-app.use(cors({
-    origin:['http://localhost:' + frontEndPort, 'http://127.0.0.1:' + frontEndPort], //what sources would we allow
-    credentials: true //for cookies, if we use them
-}))
+const router = express();
 
-/* MongoDB */
-//Connect to the database on Atlas here by exporting the connection variables from the config file
+mongoose
+    .connect(config.mongo.url, { retryWrites: true, w: 'majority' })
+    .then(() => {
+        console.log('Mongo connected');
+        StartServer();
+    })
+    .catch((error) => {
+        console.log(error);
+    });
 
-/* Initializing sessions */
-//Allow the express object to use cookies and create keys for the cookies, also let it use Passport to manage them.
+const StartServer = () => {
+    router.use((req, res, next) => {
+        console.log(req.method);
+        console.log(req.url);
+        console.log(req.socket.remoteAddress);
 
-/* Routes */
-//Allow the express object to use the definied endpoints for our REST API 
-// This is where the routes in the ./routes folder will go. 
-// import PizzaRoute from ''
-// import UserRoute from  ''
-// import DominosRoute from ''
-// import GooglePlacesRoute from ''
-const googleRouter = require("./routes/GooglePlaces.ts")
-app.use("/api", googleRouter);
+        res.on('finish', () => {
+            console.log(req.method);
+            console.log(req.url);
+            console.log(req.socket.remoteAddress);
+            console.log(res.statusCode);
+        });
 
-app.get('/', function(req,res){
-    res.send("<h2> An API used to access 'user', 'googleplaces', 'dominos', and 'user' endpoints</h2>")
-})
+        next();
+    });
 
-/* Start server object: all routes and packages should be implemented before this line. */
-app.listen(serverPort, function(){
-    console.log("Server started at port " + serverPort)
-})
+    router.use(express.urlencoded({ extended: true }));
+    router.use(express.json());
+
+    /** Rules of our API */
+    router.use((req, res, next) => {
+        res.header('Access-Control-Allow-Origin', '*');
+        res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
+
+        if (req.method == 'OPTIONS') {
+            res.header('Access-Control-Allow-Methods', 'PUT, POST, PATCH, DELETE, GET');
+            return res.status(200).json({});
+        }
+
+        next();
+    });
+
+    router.use('/users', userRoutes);
+    router.use('/googleplaces', GooglePlacesRoutes);
+
+    router.get('/ping', (req, res, next) => res.status(200).json({ hello: 'world' }));
+
+    router.use((req, res, next) => {
+        const error = new Error(
+            'The time is now near at hand which must probably determine whether Americans are to be freemen or slaves; whether they are to have any property they can call their own; whether their houses and farms are to be pillaged and destroyed, and themselves consigned to a state of wretchedness from which no human efforts will deliver them. The fate of unborn millions will now depend, under God, on the courage and conduct of this army. Our cruel and unrelenting enemy leaves us only the choice of brave resistance, or the most abject submission. We have, therefore, to resolve to conquer or die.'
+        );
+
+        console.log(error);
+
+        res.status(404).json({
+            message: error.message
+        });
+    });
+
+    http.createServer(router).listen(config.server.port, () => console.log(config.server.port));
+};
