@@ -9,8 +9,11 @@ const axios = require('axios');
 
 export async function getNearbyPlaces(pizzaInfoAddress: JSON) {
     // fix type error, pizzaInfoAddress[anything] gives error
-    let pizzaInfoAddressJSON = JSON.parse(JSON.stringify(pizzaInfoAddress));
+    let pizzaInfoAddressJSON = JSON.parse(JSON.stringify(pizzaInfoAddress))["body"];
+    pizzaInfoAddressJSON = JSON.parse(pizzaInfoAddressJSON) //the body has multiple attributes
 
+    console.log(pizzaInfoAddressJSON)
+    console.log(typeof(pizzaInfoAddressJSON))
     // pizza will either only have a single value or have cheese, sauce, size, and toppings nested in it
     if (!pizzaInfoAddressJSON['pizza'].hasOwnProperty('cheese')) {
         var pizza = pizzaInfoAddressJSON['pizza'];
@@ -162,8 +165,12 @@ async function processNearbyPlaces(places: any, lat: string, lng: string) {
         let number = undefinedCheck((_: any) => placeDetails[i].result.formatted_phone_number);
         let website = undefinedCheck((_: any) => placeDetails[i].result.website);
         let distance = undefinedCheck((_: any) => placeDistance.rows[0].elements[i].distance.text);
-
+        //we only want the number for distance
+        distance = distance.split(" ")[0]
+        distance = Number(distance)
+        
         placeDetailsFull[i] = {
+            id: i, //a numeric id for each returned place
             name: name,
             rating: rating,
             ratingNumber: ratingNumber,

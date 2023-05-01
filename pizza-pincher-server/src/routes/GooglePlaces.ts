@@ -6,7 +6,8 @@ const googleController = require('../controllers/GooglePlaces');
 const router = express.Router();
 
 // get for Google Places
-router.get('/yummyPlaces', bodyParser.json(), async function (req: any, res: any) {
+//changed the request type to "post" instead of "get" so that axios can send a "data" JSON object for the body in a request from the frontend. 
+router.post('/yummyPlaces', bodyParser.json(), async function (req: any, res: any) {
     // check for empty body
     if (JSON.stringify(req.body) == '{}') {
         res.status(400);

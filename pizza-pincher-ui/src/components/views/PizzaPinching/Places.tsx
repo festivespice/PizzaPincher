@@ -20,20 +20,24 @@ export default function Places() {
   //if not empty, figure out which pizza information isn't empty and use that one
   const notEmptyPizza = pizzaTypeCt == '' ? pizzaIngredientsCt : pizzaTypeCt
   
-  var request = {
-    method: "GET",
+  const requestUrl = "http://localhost:1337/googleplaces/yummyPlaces"
+  const requestHeaders = {
     headers: {'Content-Type': 'application/json'},
+  }
+  const requestBody = {
     body: JSON.stringify({place: locationCt, pizza: notEmptyPizza})
   }
   //console.log({place: locationCt, pizza: notEmptyPizza})
 
   useEffect(() => { //when this page is loaded, try to load the places once. Request using the search parameters.
-    axios.get("http://localhost:3001/places")
+    axios.post(requestUrl, requestBody, requestHeaders)
       .then(res => {
+        console.log(res.data)
         setPlaces(res.data)
       })
       .catch(error => {
-        alert(error)
+        console.log("Error")
+        console.log(error.message)
       })
   }, []) //removing the '[]' means to keep loading over and over again
 

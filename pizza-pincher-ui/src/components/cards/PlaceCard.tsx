@@ -10,11 +10,11 @@ interface AppProps {
 }
 export default function PlaceCard(props: AppProps) {
     const theme = useTheme()
-    const truncatedTitle = truncate(props.placeProps.title, {
+    const truncatedTitle = truncate(props.placeProps.name, {
         'length': 50,
         'separator': ' '
     })
-    const truncatedAddress = truncate(props.placeProps.location, {
+    const truncatedAddress = truncate(props.placeProps.address, {
         'length': 50,
         'separator': ' '
     })
@@ -55,7 +55,7 @@ export default function PlaceCard(props: AppProps) {
                         Rating
                     </Typography>
                     {props.placeProps.rating != null ? 
-                        <Rating name={props.placeProps.title} defaultValue={props.placeProps.rating} precision={0.5} readOnly/>
+                        <Rating name={props.placeProps.name} defaultValue={props.placeProps.rating} precision={0.5} readOnly/>
                     :
                         <Typography component="div" variant="body2">
                             -
@@ -69,7 +69,7 @@ export default function PlaceCard(props: AppProps) {
                 component="img"
                 sx={{width: 200}}
                 image={props.placeProps.imageURL}
-                alt={props.placeProps.title}
+                alt={props.placeProps.name}
             /> :
             ''}
         </Card>
