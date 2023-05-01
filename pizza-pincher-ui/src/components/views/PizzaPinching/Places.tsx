@@ -4,8 +4,9 @@ import { Navigate, Outlet, useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import PlaceCard from '../../cards/PlaceCard'
 import { PlaceInfo } from '../../../misc/interfaces/PlaceInfo'
-import { Box, Grid, Paper, Typography } from '@mui/material'
+import { Box, Card, CardActionArea, CardContent, CardMedia, Grid, Paper, Rating, Skeleton, Stack, Typography } from '@mui/material'
 import PlacesSortBar from '../../forms/PlacesSortBar/PlacesSortBar'
+import { isEmpty } from 'lodash'
 
 
 export default function Places() {
@@ -72,7 +73,47 @@ export default function Places() {
                   <PlaceCard selectCard={traverseToOutlet} placeProps={place} />
                 </Grid>
               ) :
-              "placeholder: not yet loaded."
+              <>
+              <Grid item xs={10} sm={5.5} md={3.5} my={1} sx={{backgroundColor: "white"}}>
+                  <Card sx={{display: 'flex', flexDirection: 'row', alignItems: 'stretch', justifyContent:'space-between', height: "100%"}}>
+                      <Box sx={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
+                          <CardContent>
+                            <Box sx={{ pt: 0.5 }}>
+                              <Skeleton variant="text" sx={{ fontSize: '1rem' }} />
+                              <Skeleton variant="text" sx={{ fontSize: '1rem' }} width="60%" />
+                            </Box>
+                          </CardContent>
+                      </Box>
+                    <Skeleton variant="rectangular" width={200} height={200} />
+                </Card>
+              </Grid>
+              <Grid item xs={10} sm={5.5} md={3.5} my={1} sx={{backgroundColor: "white"}}>
+                  <Card sx={{display: 'flex', flexDirection: 'row', alignItems: 'stretch', justifyContent:'space-between', height: "100%"}}>
+                      <Box sx={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
+                          <CardContent>
+                            <Box sx={{ pt: 0.5 }}>
+                              <Skeleton variant="text" sx={{ fontSize: '1rem' }} />
+                              <Skeleton variant="text" sx={{ fontSize: '1rem' }} width="60%" />
+                            </Box>
+                          </CardContent>
+                      </Box>
+                    <Skeleton variant="rectangular" width={200} height={200} />
+                </Card>
+              </Grid>
+              <Grid item xs={10} sm={5.5} md={3.5} my={1} sx={{backgroundColor: "white"}}>
+                  <Card sx={{display: 'flex', flexDirection: 'row', alignItems: 'stretch', justifyContent:'space-between', height: "100%"}}>
+                      <Box sx={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
+                          <CardContent>
+                            <Box sx={{ pt: 0.5 }}>
+                              <Skeleton variant="text" sx={{ fontSize: '1rem' }} />
+                              <Skeleton variant="text" sx={{ fontSize: '1rem' }} width="60%" />
+                            </Box>
+                          </CardContent>
+                      </Box>
+                    <Skeleton variant="rectangular" width={200} height={200} />
+                </Card>
+              </Grid>
+              </>              
             }
           </Grid>
         </Box>
