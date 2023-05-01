@@ -20,6 +20,7 @@ const initialPizzas = [
 interface AppProps {
     setPizzaForm: React.Dispatch<SetStateAction<boolean>>
 }
+
 export default function PizzaForm(props: AppProps) {
     
     const [pizzaType, setPizzaType] = useState('')

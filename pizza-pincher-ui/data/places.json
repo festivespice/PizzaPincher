@@ -4,34 +4,37 @@
             "id": 1,
             "title": "Mama Mia's",
             "location": "Orlando, Somewhere 1",
-            "hasPizza": true,
             "price": 15.00,
             "distance": 5,
             "rating": 3.61,
             "websiteURL": "http://127.0.0.1:3000/wowza",
-            "phoneNumber": "4074093019"
+            "phoneNumber": "4074093019",
+            "imageURL": "https://img.theculturetrip.com/768x/smart/wp-content/uploads/2015/12/frankspizza.jpg",
+            "ownerName": "pizzaman"
         },
         {
             "id": 2,
             "title": "Papa Johns",
             "location": "Orlando, Somewhere 2",
-            "hasPizza": true,
             "price": 8.00,
             "distance": 3.50,
             "rating": 4,
             "websiteURL": "http://127.0.0.1:3000/peetza",
-            "phoneNumber": "4074093017"
+            "phoneNumber": "4074093017",
+            "imageURL": "https://cdn.onlyinyourstate.com/wp-content/uploads/2016/12/12190859_408999932557934_929339853361937167_n-700x525.jpg",
+            "ownerName": ""
         },
         {
-            "id": 2,
+            "id": 3,
             "title": "Pizza Hut",
             "location": "Orlando, Somewhere 3",
-            "hasPizza": false,
-            "price": "",
+            "price": null,
             "distance": 1.25,
             "rating": 2.3,
             "websiteURL": "http://127.0.0.1:3000/yipyip",
-            "phoneNumber": "4074093012"
+            "phoneNumber": "4074093012",
+            "imageURL": null,
+            "ownerName": null        
         }
     ]
 }
