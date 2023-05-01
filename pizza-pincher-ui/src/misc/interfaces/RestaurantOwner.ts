@@ -1,7 +1,7 @@
-import { Place } from "./Place";
+import { PlaceInfo } from "./PlaceInfo";
 
 export interface RestaurantOwner {
     id: number,
     username: string,
-    ownedPlaces: Place[] | null
+    ownedPlaces: PlaceInfo[] | null
   }

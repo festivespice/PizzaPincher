@@ -1,6 +1,6 @@
 import { Pizza } from "./Pizza"
 
-export interface Place {
+export interface PlaceInfo {
     id: number,
     name: string, 
     address: string,

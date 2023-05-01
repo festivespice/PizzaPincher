@@ -1,11 +1,11 @@
 import React, { SetStateAction, useEffect, useState } from 'react'
-import { Place } from '../../../misc/interfaces/Place'
+import { PlaceInfo } from '../../../misc/interfaces/PlaceInfo'
 import { isEmpty, orderBy, compact, toLower } from 'lodash'
 import { Box, Checkbox, FormControlLabel, MenuItem, Select, SelectChangeEvent, Stack, Typography } from '@mui/material'
 
 interface AppProps {
-    places: Place[]
-    setPlaces: React.Dispatch<SetStateAction<Place[]>>
+    places: PlaceInfo[]
+    setPlaces: React.Dispatch<SetStateAction<PlaceInfo[]>>
 }
 
 export default function PlacesSortBar(props: AppProps) {
@@ -47,7 +47,7 @@ export default function PlacesSortBar(props: AppProps) {
         //compact(sortStrings.map(s => sortMap.get(s)))//I can't specifically show typescript what's in the array, so I just labelled it as any
         //removes all undefined values using 'compact()'
 
-        //the names of the attributes in the Place objects are lowercase: use a lowercase sortStrings
+        //the names of the attributes in the PlaceInfo objects are lowercase: use a lowercase sortStrings
         sortStrings = sortStrings.map(s => toLower(s))
         newPlaces = orderBy(newPlaces, sortStrings, sortOrderStrings)
         props.setPlaces(newPlaces)

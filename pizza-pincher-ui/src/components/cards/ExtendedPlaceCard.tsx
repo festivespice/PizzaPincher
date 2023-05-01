@@ -3,32 +3,27 @@ import { PlaceInfo } from '../../misc/interfaces/PlaceInfo'
 import Card from '@mui/material/Card'
 import Box from '@mui/material/Box'
 import { CardActionArea, CardContent, CardMedia, Rating, Stack, Typography, useTheme } from '@mui/material'
-import { truncate, isEmpty } from 'lodash'
+import { isEmpty, truncate } from 'lodash'
 
 interface AppProps {
-    placeProps: PlaceInfo,
-    selectCard: (placeId: number) => void //void function
+    placeProps: PlaceInfo
 }
-export default function PlaceCard(props: AppProps) {
-    const theme = useTheme()
+
+export default function ExtendedPlaceCard(props: AppProps) {
+  const theme = useTheme()
     const truncatedTitle = truncate(props.placeProps.name, {
-        'length': 50,
+        'length': 100,
         'separator': ' '
     })
     const truncatedAddress = truncate(props.placeProps.address, {
-        'length': 50,
+        'length': 100,
         'separator': ' '
     })
-
-    const selectCardHelper = () => {
-        props.selectCard(props.placeProps.id)
-    }
     
     
 
     return (
         <Card sx={{display: 'flex', flexDirection: 'row', alignItems: 'stretch', justifyContent:'space-between', height: "100%"}}>
-            <CardActionArea sx={{display: 'flex', flexDirection: 'row', alignItems: 'stretch'}} onClick={selectCardHelper}>    
                 <Box sx={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
                     <CardContent>
                         <Typography component="div" variant="h6">
@@ -62,17 +57,16 @@ export default function PlaceCard(props: AppProps) {
                         </Typography>
                         {props.placeProps.rating != null ? 
                         <>
-                        <Rating name={props.placeProps.name} defaultValue={props.placeProps.rating} precision={0.2} readOnly/>
+                            <Rating name={props.placeProps.name} defaultValue={props.placeProps.rating} precision={0.2} readOnly/>
                             <Typography component="div" variant="body2">
                                 {props.placeProps.ratingNumber}
                             </Typography>
-                        </>          
+                        </>                        
                         :
                             <Typography component="div" variant="body2">
                                 -
                             </Typography>
                         }
-                        
                     </Box>
                 </Box>
                 {typeof(props.placeProps.imageURL) == "string" && !isEmpty(props.placeProps.imageURL) ? 
@@ -84,11 +78,10 @@ export default function PlaceCard(props: AppProps) {
                 /> :
                 <CardMedia
                     component="img"
-                    sx={{width: '50%'}}
-                    image={"src/assets/no-image-found.png"}
+                    sx={{width: '40%'}}
+                    image={"../src/assets/no-image-found.png"}
                     alt={"no image found"}
                 />}
-            </CardActionArea>    
         </Card>
     )
 }

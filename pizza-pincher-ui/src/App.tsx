@@ -29,7 +29,7 @@ const router = createBrowserRouter(
         <Route path="Location" element={<Location/>}></Route>
       </Route>
       <Route path="Places" element={<Places/>}>
-        <Route path="Place/:name" element={<Place/>}></Route>
+        <Route path="Place" element={<Place/>}></Route>
       </Route>
       <Route path="Signup" element={<Signup/>}></Route>
       <Route path="Login" element={<Login/>}></Route>

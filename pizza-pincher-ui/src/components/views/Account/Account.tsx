@@ -2,13 +2,13 @@ import React, { useContext, useEffect, useState } from 'react'
 import { userContext } from '../../../misc/contexts/userContext'
 import { Navigate } from 'react-router-dom'
 import { Box, Button, Grid, Paper, Typography } from '@mui/material'
-import { Place } from '../../../misc/interfaces/Place'
+import { PlaceInfo } from '../../../misc/interfaces/PlaceInfo'
 import PlaceCard from '../../cards/PlaceCard'
 import axios from 'axios'
 
 export default function Account() {
     const {username, setUsername} = useContext(userContext)
-    const [ownedPlaces, setOwnedPlaces] = useState<Place[]>([])
+    const [ownedPlaces, setOwnedPlaces] = useState<PlaceInfo[]>([])
     if(!username){
         return<Navigate to="/" replace={true}/>
     } else {
@@ -48,7 +48,7 @@ export default function Account() {
                                     ownedPlaces.map(
                                         place => 
                                         <Grid item key={place.id} xs={5.5} my={1} sx={{backgroundColor: "white"}}>
-                                            <PlaceCard placeProps={place} />
+                                            <PlaceCard placeProps={place} selectCard={function (placeId: number): void {/*placeholder*/} } />
                                         </Grid>
                                     ) :
                                     "placeholder: not yet loaded."
