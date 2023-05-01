@@ -23,7 +23,7 @@ export default function PlaceCard(props: AppProps) {
     const selectCardHelper = () => {
         props.selectCard(props.placeProps.id)
     }
-    
+    console.log(props.placeProps.photo)
     
 
     return (
@@ -75,11 +75,11 @@ export default function PlaceCard(props: AppProps) {
                         
                     </Box>
                 </Box>
-                {typeof(props.placeProps.imageURL) == "string" && !isEmpty(props.placeProps.imageURL) ? 
+                {typeof(props.placeProps.photo) == "string" && !isEmpty(props.placeProps.photo) ? 
                 <CardMedia
                     component="img"
                     sx={{width: '25%'}}
-                    image={props.placeProps.imageURL}
+                    image={props.placeProps.photo}
                     alt={props.placeProps.name}
                 /> :
                 <CardMedia

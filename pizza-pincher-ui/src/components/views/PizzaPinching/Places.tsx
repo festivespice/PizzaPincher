@@ -22,7 +22,6 @@ export default function Places() {
   useEffect(() => { //when this page is loaded, try to load the places once. Request using the search parameters.
     axios.post(requestUrl, requestBody, requestHeaders)
       .then(res => {
-        console.log(res.data)
         setPlaces(res.data)
       })
       .catch(error => {

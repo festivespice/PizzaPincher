@@ -91,6 +91,10 @@ function getPlaceDetails(placeID: string) {
         'formatted_phone_number' +
         '%2C' +
         'website' +
+        '%2C' + 
+        'geometry' +
+        '%2C' +
+        'photos' +
         '&place_id=' +
         placeID +
         '&key=' +
@@ -137,6 +141,32 @@ function getDistance(placeID: string[], lat: string, lng: string) {
         });
 }
 
+function getPhoto(photo: any) {
+    let fullUrl = "https://maps.googleapis.com/maps/api/place/photo" +
+        "?maxwidth=500" +
+        "&maxheight=500" + 
+        "&photo_reference=" +
+        photo.photo_reference +
+        "&key=" +
+        api + 
+        "&size=500x500" 
+
+    let config = {
+        method: 'get',
+        url: fullUrl,
+        headers: {}
+    };
+    return fullUrl
+    // .then(function (response: AxiosResponse<any>) {
+    //     console.log(response.data)
+    //     return response.data;
+    // })
+    // .catch(function (error: AxiosError<any>) {
+    //     console.log(error);
+    //     return 'Error occurred getting distances';
+    // });
+}
+
 async function processNearbyPlaces(places: any, lat: string, lng: string) {
     let placeDetails: any[] = [];
     let placeDetailsFull: any[] = [];
@@ -155,6 +185,7 @@ async function processNearbyPlaces(places: any, lat: string, lng: string) {
     placeDistance = await getDistance(placeID, lat, lng);
 
     for (let i = 0; i < placeID.length; i++) {
+        //preprocess
         let name = undefinedCheck((_: any) => placeDetails[i].result.name);
         let rating = undefinedCheck((_: any) => placeDetails[i].result.rating);
         let ratingNumber = undefinedCheck((_: any) => placeDetails[i].result.user_ratings_total);
@@ -163,10 +194,14 @@ async function processNearbyPlaces(places: any, lat: string, lng: string) {
         let number = undefinedCheck((_: any) => placeDetails[i].result.formatted_phone_number);
         let website = undefinedCheck((_: any) => placeDetails[i].result.website);
         let distance = undefinedCheck((_: any) => placeDistance.rows[0].elements[i].distance.text);
+        let lati = undefinedCheck((_: any) => placeDetails[i].result.geometry.location.lat);
+        let long = undefinedCheck((_: any) => placeDetails[i].result.geometry.location.lng);
+        let photo = undefinedCheck((_: any) => getPhoto(placeDetails[i].result.photos[0]));
         //we only want the number for distance
         distance = distance.split(" ")[0]
         distance = Number(distance)
 
+        //the data we will send for this index
         placeDetailsFull[i] = {
             id: i, //a numeric id for each returned place
             name: name,
@@ -176,7 +211,10 @@ async function processNearbyPlaces(places: any, lat: string, lng: string) {
             address: address,
             number: number,
             website: website,
-            distance: distance
+            distance: distance,
+            photo: photo,
+            lati: lati,
+            long: long
         };
     }
 

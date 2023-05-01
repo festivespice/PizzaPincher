@@ -13,5 +13,8 @@ export interface PlaceInfo {
     imageURL: string|null,
     ownerUsername: string|null
     pizzas: Pizza[] | null,
-    openHours: string[] | null
+    openHours: string[] | null,
+    lati: number | null,
+    long: number | null
+    photo: string | null
   }
